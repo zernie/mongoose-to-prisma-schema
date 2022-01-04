@@ -39,17 +39,17 @@ function parseObjectType(obj: ParseObjectType, propName: string) {
       em = parseCollection({ name: propName, obj: ob })
     }
   } else {
-    if ("type" in obj) {
+    if (obj.hasOwnProperty("type")) {
       typ = types[obj.type.name]
-      if ("enum" in obj) {
+      if (obj.hasOwnProperty("enum")) {
         typ = capitalise(propName)
         em = `enum ${typ} {\n  `
         em += obj.enum.join("\n  ") + "\n}"
       }
-      if ("unique" in obj) {
+      if (obj.hasOwnProperty("unique")) {
         typ += " @unique"
       }
-      if ("default" in obj) {
+      if (obj.hasOwnProperty("default")) {
         let d = obj.default
         typ += ` @default(${em ? d : typ === "String" ? `'${d}'` : d})`
       }
